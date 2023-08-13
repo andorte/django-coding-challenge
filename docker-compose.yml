@@ -1,11 +1,15 @@
 services:
   license-server:
+    tty: true
     build:
       context: ./license_portal
     links:
       - postgres
     volumes:
       - ./license_portal:/app
+    ports:
+      - "${PORT}:${PORT}"
+    command: python manage.py runserver 0.0.0.0:${PORT}
 
   postgres:
     image: 'postgres:13'
