@@ -27,7 +27,7 @@ class NotificationBusinessLogicTestCase(TestCase):
  
     def test_with_license_expiring_within_7_days(self):
         client:Client = self.get_client()
-        create_license(client, (datetime.utcnow() + timedelta(days=DAYS_IN_A_WEEK+1)))
+        create_license(client, (datetime.utcnow() + timedelta(days=DAYS_IN_A_WEEK)))
         self.assertTrue(should_receive_notification(client))
 
     def test_with_license_expiring_within_6_days(self):

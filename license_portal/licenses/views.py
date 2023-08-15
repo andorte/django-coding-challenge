@@ -1,19 +1,16 @@
 
-from licenses.utils import licenses_that_will_expire_soon, should_receive_notification, notify_license_expiration
+from licenses.utils import notify_license_expiration, licenses_that_needs_notification
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
 class NotifyLicenseExpiration(APIView):
     def post(self, request):
-        clients_with_licenses_that_will_expire_soon = licenses_that_will_expire_soon().values_list(
+        clients_that_needs_notification = licenses_that_needs_notification().values_list(
             'client__id', flat=True
         ).distinct()
 
-        notified_clients_qty:int = 0
-        for client_id in clients_with_licenses_that_will_expire_soon:
-            if should_receive_notification(client_id):
-                notify_license_expiration(client_id)
-                notified_clients_qty += 1
+        for client_id in clients_that_needs_notification:
+            notify_license_expiration(client_id)
 
-        return Response(f"{notified_clients_qty} client(s) notified.")
+        return Response(f"{clients_that_needs_notification.__len__()} client(s) notified.")
