@@ -1,3 +1,10 @@
 from django.contrib import admin
+from licenses.models import Client, License
 
-# Register your models here.
+@admin.register(Client)
+class ClientAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(License)
+class LicenseAdmin(admin.ModelAdmin):
+    pass

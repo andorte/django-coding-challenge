@@ -18,14 +18,20 @@ class ChoiceEnum(enum.Enum):
         return [(a.name, a.value) for a in cls]
 
 
-class Package(ChoiceEnum):
+# The original get_choices is using the name as key. This one works with django admin.
+class ValueNameChoiceEnum(ChoiceEnum):
+    @classmethod
+    def get_choices(cls) -> tuple:
+        return tuple((i.value, i.name) for i in cls)
+
+class Package(ValueNameChoiceEnum):
     """A Package accessible to a client with a valid license"""
     javascript_sdk = 0
     ios_sdk = 1
     android_sdk = 2
 
 
-class LicenseType(ChoiceEnum):
+class LicenseType(ValueNameChoiceEnum):
     """A license type"""
     production = 0
     evaluation = 1
@@ -55,3 +61,6 @@ class Client(models.Model):
     poc_contact_email = models.EmailField()
 
     admin_poc = models.ForeignKey(User, limit_choices_to={'is_staff': True}, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.client_name}"

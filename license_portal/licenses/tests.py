@@ -1,5 +1,5 @@
 from django.test import TestCase
-from licenses.views import should_receive_notification, DAYS_IN_A_WEEK, DAYS_TO_SEND_EMAILS_EXPIRING_IN_A_MONTH
+from licenses.utils import should_receive_notification, DAYS_IN_A_WEEK, DAYS_TO_SEND_EMAILS_EXPIRING_IN_A_MONTH
 from licenses.models import Client, License
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta, date
