@@ -2,7 +2,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from django.db.models.query import QuerySet
 from django.db.models import Q
-from licenses.models import Client, License
+from licenses.models import Client, License, NotificationSummary
 import pytz
 from licenses.notifications import EmailNotification
 
@@ -51,4 +51,10 @@ def notify_license_expiration(client_id:int) -> None:
             'client': client_object
         },
         subject=f"{client_object} has expiring licenses!"
+    )
+
+    NotificationSummary.objects.create(
+        client=client_object,
+        admin_poc=client_object.admin_poc,
+        quantity_of_notificated_licenses = licenses_that_needs_notification.__len__()
     )

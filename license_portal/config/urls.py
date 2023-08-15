@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from licenses.views import NotifyLicenseExpiration
+from licenses.views import NotifyLicenseExpirationView, LicenseExpirationNotificationListView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/notify_license_expiration/', NotifyLicenseExpiration.as_view())
+    url(r'^api/notify_license_expiration/', NotifyLicenseExpirationView.as_view()),
+    url(r'', LicenseExpirationNotificationListView.as_view())
 ]

@@ -64,3 +64,9 @@ class Client(models.Model):
 
     def __str__(self) -> str:
         return f"{self.client_name}"
+
+class NotificationSummary(models.Model):
+    sending_date = models.DateTimeField(auto_now=True)
+    client = models.ForeignKey(Client, limit_choices_to={'is_staff': True}, on_delete=models.CASCADE)
+    admin_poc = models.ForeignKey(User, limit_choices_to={'is_staff': True}, on_delete=models.CASCADE)
+    quantity_of_notificated_licenses = models.PositiveSmallIntegerField()
