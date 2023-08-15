@@ -21,8 +21,10 @@ class EmailNotification:
         return get_template(cls.template_path)
 
     @classmethod
-    def send_notification(cls, recipients: List[str], context: Any):
+    def send_notification(cls, recipients: List[str], context: Any, subject:str=None):
         """Send the notification using the given context"""
         template = cls.load_template()
         message_body = template.render(context=context)
-        send_mail(cls.subject, message_body, cls.from_email, recipients, fail_silently=False)
+        if not subject:
+            subject = cls.subject
+        send_mail(subject, message_body, cls.from_email, recipients, fail_silently=False)

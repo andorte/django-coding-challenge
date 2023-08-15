@@ -1,0 +1,4 @@
+The client {{ client.client_name }} has the following expiring licenses:
+{% for license in licenses %}- ID {{ license.id }} - {{ license.get_license_type_display }} - {{ license.get_package_display }} - {{ license.expiration_datetime }}
+{% endfor %}
+Its point of contact is {{ client.poc_contact_name }} on the e-mail {{ client.poc_contact_email }}.
